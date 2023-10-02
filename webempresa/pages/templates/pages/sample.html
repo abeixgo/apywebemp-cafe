@@ -1,0 +1,31 @@
+{% extends "core/base.html" %} <!--herencia de la pantilla base-->
+
+{% load static %}<!--cargamos los recursos estaticos-->
+{% block title %}Sample{% endblock %}<!--titulo dinamico para cada pagina-->
+
+<!--contenido principal para cada pagina dentro de block content-->
+    {% block content %}
+    <!--contenido sample-->
+    <section class="page-section about-heading">
+      <div class="container">
+        <div class="about-heading-content mbtm">
+          <div class="row">
+            <div class="col-xl-9 col-lg-10 mx-auto">
+              <div class="bg-faded rounded p-5 forced">
+                <h2 class="section-heading mb-4">
+                  <span class="section-heading-lower">{{page.title_pag}}</span>
+                </h2>
+                <div class="section-content">
+                    {{page.content|safe}}<!--linebreaks=lineas separadas-->
+                    {% if user.is_authenticated %}
+                      <p><a href="{% url 'admin:pages_page_change' page.id %}">Editar</a></p><!--Adminsitrador:nombreAPP_nombreModelo_accionAEjevutarse-->
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock %}
+    

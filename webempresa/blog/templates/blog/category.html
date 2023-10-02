@@ -1,0 +1,41 @@
+{% extends "core/base.html" %} <!--herencia de la pantilla base-->
+
+{% load static %}<!--cargamos los recursos estaticos-->
+{% block title %}Blog{% endblock %}<!--titulo dinamico para cada pagina-->
+
+<!--contenido principal para cada pagina dentro de block content-->
+    {% block content %}
+
+    <!--contenido blog-->
+    {% for post in category.get_categories.all %}<!--es el nombre o la llave del diccionario ||| consulta inversa para obetener cateogrias en este caso con nombre genrico post lo arreglamos para ello el model ponemos related_name='get_categories'-->
+    <section class="page-section cta">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="cta-innerv text-center rounded">
+              <h2 class="section-heading mb-5">
+                <span class="section-heading-upper">{{post.published|date:'SHORT_DATE_FORMAT'}}</span><!--filtro formato de fecha-->
+                <span class="section-heading-lower">{{post.title_pos}}</span>
+              </h2>
+              <p class="mb-0">
+                <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{post.image.url}}" alt="">
+              </p>
+              <p class="mb-0 mbt">
+                 {{post.content|linebreaks}}
+              </p>
+              <p class="mb-0 mbt">
+                <span class="section-heading-under">Publicado por <em><b>{{post.author}}</b></em> en 
+                <!--<em><a href="#" class="link">General</a>, <a href="#" class="link">Ofertas</a></em>-->
+                {% for category in post.categories.all %}
+                  <a href="{% url 'list_category' category.id %}" class="link">{{category.name_cat}}</a>{% if not forloop.last %},{%endif%}
+                {% endfor %}
+                </span>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endfor %}
+    {% endblock %}
