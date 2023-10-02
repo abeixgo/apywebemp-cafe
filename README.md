@@ -1,2 +1,2 @@
 # apywebemp-cafe
-web empresa don Django de cafetria
+web empresa de Django de cafetria
